@@ -23,9 +23,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <None Update="crypto.xml">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </None>
     <None Update="resources\crypto.xml">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>

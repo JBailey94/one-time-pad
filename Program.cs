@@ -1,19 +1,36 @@
-﻿using System.Xml.Serialization;
-
-namespace otp
+﻿namespace otp
 {
     public class Program
     {
         public static Dictionary<char, int> LetterMap;
         static void Main(string[] args)
         {
-            using (Stream reader = new FileStream("crypto.xml", FileMode.Open))
+            Console.WriteLine("Encrypt or Decrypt? (e or d): ");
+            ConsoleKeyInfo keyPress = Console.ReadKey();
+            if (keyPress.Key == ConsoleKey.E)
             {
-                Crypto? crypto = new XmlSerializer(typeof(Crypto)).Deserialize(reader) as Crypto;
-                Console.WriteLine($"Plaintext: {crypto.PlainText}");
-                Console.WriteLine($"Ciphertext: {crypto.CipherText}");
-                Console.WriteLine($"DecryptedText: {crypto.DecryptText}"); 
-            }       
+                Console.WriteLine();
+                Console.WriteLine("Enter plain text to encrypt: ");
+                string plainText = Console.ReadLine();
+                Console.WriteLine("Enter key: ");
+                string key = Console.ReadLine();
+                Crypto crypto = new Crypto();
+                Console.WriteLine("Encrypted text: " + crypto.Encrypt(plainText, key));
+            }
+            else if (keyPress.Key == ConsoleKey.D)
+            {
+                Console.WriteLine();
+                Console.WriteLine("Enter ciphertext to decrypt: ");
+                string cipherText = Console.ReadLine();
+                Console.WriteLine("Enter key: ");
+                string key = Console.ReadLine();
+                Crypto crypto = new Crypto();
+                Console.WriteLine("Decrypted text: " + crypto.Decrypt(cipherText, key));
+            }
+            else
+            {
+                Console.WriteLine("Invalid input");
+            }
         }
     }
 }

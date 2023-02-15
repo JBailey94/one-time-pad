@@ -10,79 +10,92 @@ namespace otp
 {
     public class Crypto
     {
-        public string PlainText { get; set; }
-        public string Key { get; set; }
-        [XmlIgnore]
-        public string CipherText
+        public string Encrypt(string plaintext, string key)
         {
-            get
+            List<char> plainChars = plaintext.ToCharArray().ToList();
+            List<char> keyChars = key.ToCharArray().ToList();
+            List<int> keyNums = new List<int>();
+            
+            foreach (char c in keyChars)
             {
-                List<int> keyNums = Key.Split(',').Select(item => int.Parse(item)).ToList();
-                string cipherString = "";
-
-                int index = 0;
-                foreach (char c in PlainText)
+                if (Char.IsLetter(c))
                 {
-                    if (Char.IsLetter(c))
-                    {
-                        LetterMap.TryGetValue(Char.ToLower(c), out int newValue);
-                        newValue += keyNums[index];
-
-                        if (newValue >= 26)
-                        {
-                            newValue -= 26;
-                        }
-
-                        keyNums[index] = newValue;
-                        char newKeyChar = LetterMap.FirstOrDefault(x => x.Value == newValue).Key;
-                        cipherString += newKeyChar;
-                        index++;
-                    } 
-                    else
-                    {
-                        cipherString += c;
-                    } 
-
+                    LetterMap.TryGetValue(Char.ToLower(c), out int value);
+                    keyNums.Add(value);
                 }
-                return cipherString;
             }
-        }
-        [XmlIgnore]
-        public String DecryptText
-        {
-            get
+
+            string ciphertext = "";
+            int index = 0;
+            foreach (char c in plainChars)
             {
-                List<int> keyNums = Key.Split(',').Select(item => int.Parse(item)).ToList();
-                string decryptText = "";
-
-                int index = 0;
-
-                foreach (char c in CipherText)
+                if (Char.IsLetter(c))
                 {
-                    if (Char.IsLetter(c))
-                    {
-                        LetterMap.TryGetValue(Char.ToLower(c), out int newValue);
-                        newValue -= keyNums[index];
+                    LetterMap.TryGetValue(Char.ToLower(c), out int newValue);
+                    newValue += keyNums[index];
 
-                        if (newValue < 0)
-                        {
-                            newValue += 26;
-                        }
-
-                        keyNums[index] = newValue;
-                        char newKeyChar = LetterMap.FirstOrDefault(x => x.Value == newValue).Key;
-                        decryptText += newKeyChar;
-                        index++;
-                    }
-                    else
+                    if (newValue >= 26)
                     {
-                        decryptText += c;
+                        newValue -= 26;
                     }
 
+                    keyNums[index] = newValue;
+                    char newKeyChar = LetterMap.FirstOrDefault(x => x.Value == newValue).Key;
+                    ciphertext += newKeyChar;
+                    index++;
                 }
-                return decryptText;
+                else
+                {
+                    ciphertext += c;
+                }
+
             }
+            return ciphertext;
         }
+
+        public string Decrypt(string ciphertext, string key)
+        {
+            List<char> cipherChars = ciphertext.ToCharArray().ToList();
+            List<char> keyChars = key.ToCharArray().ToList();
+            List<int> keyNums = new List<int>();
+
+            foreach (char c in keyChars)
+            {
+                if (Char.IsLetter(c))
+                {
+                    LetterMap.TryGetValue(Char.ToLower(c), out int value);
+                    keyNums.Add(value);
+                }
+            }
+
+            string plainText = "";
+            int index = 0;
+            foreach (char c in cipherChars)
+            {
+                if (Char.IsLetter(c))
+                {
+                    LetterMap.TryGetValue(Char.ToLower(c), out int newValue);
+                    newValue -= keyNums[index];
+
+                    if (newValue < 0)
+                    {
+                        newValue += 26;
+                    }
+
+                    keyNums[index] = newValue;
+                    char newKeyChar = LetterMap.FirstOrDefault(x => x.Value == newValue).Key;
+                    plainText += newKeyChar;
+                    index++;
+                }
+                else
+                {
+                    plainText += c;
+                }
+
+            }
+            return plainText;
+        }
+        
         [XmlIgnore]
         public Dictionary<char, int> LetterMap;
 
