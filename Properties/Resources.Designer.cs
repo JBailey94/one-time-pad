@@ -59,18 +59,5 @@ namespace otp.Properties {
                 resourceCulture = value;
             }
         }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to &lt;?xml version=&quot;1.0&quot; encoding=&quot;utf-8&quot;?&gt;
-        ///&lt;Crypto xmlns:xsi=&quot;http://www.w3.org/2001/XMLSchema-instance&quot; xmlns:xsd=&quot;http://www.w3.org/2001/XMLSchema&quot;&gt;
-        ///  &lt;PlainText&gt;Never gonna give you up never gonna let you down&lt;/PlainText&gt;
-        ///  &lt;Key&gt;0,4,14,9,4,17,0,17,18,22,4,18,25,5,12,5,3,3,21,23,25,21,1,22,6,21,25,14,13,5,25,13,0,23,22,4,7,15,10&lt;/Key&gt;
-        ///&lt;/Crypto&gt;.
-        /// </summary>
-        public static string crypto {
-            get {
-                return ResourceManager.GetString("crypto", resourceCulture);
-            }
-        }
     }
 }
