@@ -10,7 +10,7 @@
             do
             {
                 Console.WriteLine("Choose an option!");
-                Console.WriteLine("Press E to Encrypt\nPress D to Decrypt \nPress Q to Quit:");
+                Console.WriteLine("Press E to Encrypt\nPress D to Decrypt\nPress N to print num values\nPress Q to Quit:");
                 
                 keyPress = Console.ReadKey();
                 if (keyPress.Key == ConsoleKey.E)
@@ -32,6 +32,14 @@
                     string key = Console.ReadLine();
                     Crypto crypto = new Crypto();
                     Console.WriteLine("Decrypted text: \n" + crypto.Decrypt(cipherText, key));
+                }
+                else if (keyPress.Key == ConsoleKey.N)
+                {
+                    Console.WriteLine();
+                    Console.WriteLine("Enter to the text to show num values: ");
+                    string text = Console.ReadLine();
+                    Crypto crypto = new Crypto();
+                    Console.WriteLine("Decrypted text: \n" + crypto.PrintNumValues(text));
                 }
                 else if (keyPress.Key == ConsoleKey.Q)
                 {

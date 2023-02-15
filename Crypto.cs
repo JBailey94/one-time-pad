@@ -95,7 +95,27 @@ namespace otp
             }
             return plainText;
         }
-        
+
+        /**
+         * Prints the numeric values of each letter in the provided text
+         * a = 0 through z = 25
+         */
+        public string PrintNumValues(string text)
+        {
+            // Print the number values of each letter in the text
+            List<char> chars = text.ToCharArray().ToList();
+            string numValues = "";
+            foreach (char c in chars)
+            {
+                if (Char.IsLetter(c))
+                {
+                    LetterMap.TryGetValue(Char.ToLower(c), out int value);
+                    numValues += value + " ";
+                }
+            }
+            return numValues;
+        }
+
         [XmlIgnore]
         public Dictionary<char, int> LetterMap;
 
